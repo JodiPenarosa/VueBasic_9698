@@ -5,35 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Tebak Angka</title>
     <script src="vue.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
 </head>
 <body>
-    <div id="app">
+    <div id="app" >
+        <h2 class="d-flex justify-content-center">Tebak angka (1-10) !!! </h2>
         <div >
             <div >
-                <div >Tebak angka (1-10) !!! </div>
-                    <input type="teks"  v-model="tebakan" />
+                <div  >
+                    <input type="number"  class="form-control" v-model="tebakan" :disabled="isDisabled" placeholder="tebak berapa hayoo" />
                     <br>
-                    <button class="btn btn-primary btn-sm" @click="tebak">Tebak</button>
+                    <button class="btn btn-primary btn-sm"  class="d-flex justify-content-center" @click="tebak" :disabled="isDisabled">Tebak</button>
                     <br>
-                    <p>Kesempatan : {{ kesempatan }}</p>
+                    <p class="d-flex justify-content-center mt-5">Kesempatan : {{ kesempatan }}</p>
             </div>
         </div>
-        <div v-show="benar">
-            <p>Tebakan kamu benar </p> 
+        <div v-show="benar" >
+            <p class="d-flex justify-content-center ">Tebakan kamu benar </p> 
             <button class="btn btn-primary" @click="mainlagi" >main lagi</button>
         </div>
         <div  v-show="kalah">
-            <p>Kamu Kalah </p> 
-            <button class="btn btn-primary" @click="mainlagi" >main lagi</button>
+            <p class="d-flex justify-content-center">Kamu kalah !</p> 
+            <button class="btn btn-primary"  @click="mainlagi" >main lagi</button>
         </div>
         <div  v-show="salah">
-            <p>Tebakan kamu salah </p> 
-            <button class="btn btn-primary" @click="cobalagi" >Coba lagi</button>
+            <p class="d-flex justify-content-center">Tebakan kamu salah </p> 
+            <button class="btn btn-primary"  @click="cobalagi" >Coba lagi</button>
         </div>
+
+        <p>Kunci Jawaban : {{ angka }} </p> 
         
-        <footer>
-            {{ dt.nama }} | {{ dt.npm }} | {{ dt.kelas }}
+        
+        <footer class="d-flex justify-content-center mt-5">
+            {{ mhs.nama }} | {{ mhs.npm }} | {{ mhs.kelas }}
         </footer>
     </div>
 </body>
@@ -41,13 +45,14 @@
     new Vue({
         el: "#app",
         data: {
-            angka: 3,
-            tebakan:"",
+            angka: Math.floor(Math.random() * 10)+1,
+            tebakan:0,
             kesempatan:3,
-            salah:0,
-            benar:0,
-            kalah:0,
-            dt :{
+            salah:undefined,
+            benar:undefined,
+            kalah:undefined,
+            isDisabled:false,
+            mhs :{
                 nama:"Jodi Penarosa",
                 npm: 180709698,
                 kelas: "PAW C",
@@ -59,23 +64,20 @@
                 this.benar = 1;
             }else {
                 this.salah =1;
+                this.isDisabled=true;
                 this.kesempatan--;
                 if(this.kesempatan==0){
                         this.kalah=1;
-                        this.salah=0;
+                        this.salah=undefined;
                     }        
             }              
            },
            cobalagi(){
+                this.isDisabled=false;
                 this.salah = 0;
            },
            mainlagi(){
-            this.angka= 3,
-            this.tebakan=Math.random()*10,
-            this.kesempatan=3,
-            this.salah=0,
-            this.benar=0,
-            this.kalah=0
+            location.reload();
            }
         },
  
