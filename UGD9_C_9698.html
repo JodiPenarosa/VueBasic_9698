@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Angka</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div >
+            <div >
+                <div >Tebak angka (1-10) !!! </div>
+                    <input type="teks"  v-model="tebakan" />
+                    <br>
+                    <button class="btn btn-primary btn-sm" @click="tebak">Tebak</button>
+                    <br>
+                    <p>Kesempatan : {{ kesempatan }}</p>
+            </div>
+        </div>
+        <div v-show="benar">
+            <p>Tebakan kamu benar </p> 
+            <button class="btn btn-primary" @click="mainlagi" >main lagi</button>
+        </div>
+        <div  v-show="kalah">
+            <p>Kamu Kalah </p> 
+            <button class="btn btn-primary" @click="mainlagi" >main lagi</button>
+        </div>
+        <div  v-show="salah">
+            <p>Tebakan kamu salah </p> 
+            <button class="btn btn-primary" @click="cobalagi" >Coba lagi</button>
+        </div>
+        
+        <footer>
+            {{ dt.nama }} | {{ dt.npm }} | {{ dt.kelas }}
+        </footer>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            angka: 3,
+            tebakan:"",
+            kesempatan:3,
+            salah:0,
+            benar:0,
+            kalah:0,
+            dt :{
+                nama:"Jodi Penarosa",
+                npm: 180709698,
+                kelas: "PAW C",
+            },
+        },
+        methods: {
+           tebak(){
+            if(this.tebakan == this.angka){
+                this.benar = 1;
+            }else {
+                this.salah =1;
+                this.kesempatan--;
+                if(this.kesempatan==0){
+                        this.kalah=1;
+                        this.salah=0;
+                    }        
+            }              
+           },
+           cobalagi(){
+                this.salah = 0;
+           },
+           mainlagi(){
+            this.angka= 3,
+            this.tebakan=Math.random()*10,
+            this.kesempatan=3,
+            this.salah=0,
+            this.benar=0,
+            this.kalah=0
+           }
+        },
+ 
+    });
+</script>
+</html>
