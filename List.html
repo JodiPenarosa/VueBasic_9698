@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>TGS8_C_9698</title>
+  <script src="vue.js"></script>
+  <style>
+    body{
+        background-color: cyan;
+        background-size: cover;
+        min-height: 200vh;
+      }
+    footer {
+        background-color: black;
+        color: white;
+        position: fixed;
+        text-align: center;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .button {
+    background-color: #4CAF50; /* Hijau */
+    border: none;
+    color: white;
+    }
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+      <div class="d-flex justify-content-center">
+          <div class=" col-md-4 col-sm-12 mb-3 mt-4" >
+              <div class="card-body bg-light mt-4">
+                <h1 align="center">{{ judul }}</h1>             
+                  <div class="field">
+                        <label>Apa yang Ingin Kamu Kerjakan ?? <label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="" id="aktivitas" v-model="aktivitas">
+                        </div>
+                    </div>
+
+                    <div class="field" >
+                        <label >Penting Gak ?</label>
+                            <div class="control" >
+                                <div class="select" v-model="prioritas" >
+                                <select name="jenisPengiriman" id="prioritas" v-model="prioritas"> 
+                                    <option value="">Pilih Prioritas</option>
+                                    <option value="Penting">Penting</option>
+                                    <option value="Biasa">Biasa</option>
+                                    <option value="Tidak Penting">Tidak Penting</option>
+                                </select>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Ada Catatan Penting?</label>
+                        <div class="columns">
+                            <div class="column" id="left">
+                                <div class="field">
+                                    <div class="control">
+                                        <textarea class="textarea" type="textarea" placeholder="" id="Informasi" v-model="informasi"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-primary btn-sm" name="add" @click="addData()">Simpan</button>
+                        <button class="btn btn-danger btn-sm" name="cancel" @click="cancelData()">Reset</button>
+                    </div>
+              </div>
+              <div class="card-body border">
+                <ul v-for="(data, index) in rows" class="mt-1 mr-5">
+                    <div class="columns border bg-light" align="center">
+                                <span v-if ="data.prioritas == 'Penting'"> 
+                                    <label class="bg-danger">{{data.prioritas}}</label>
+                                </span>
+                                <span v-else-if ="data.prioritas == 'Biasa'"> 
+                                    <label class="bg-primary">{{data.prioritas}}</label>
+                                </span>
+                                <span v-else>
+                                    <label class="bg-success">{{data.prioritas}}</label> 
+                                </span>
+                            <h6 style="color: black;"><b> {{data.nama}} </b></h6>
+                            <p style="color: black;">{{data.informasi}}</p>
+                            <button class="btn btn-danger btn-sm" name="cancel" @click="deleteData(index)">Hapus</button>
+                    </div>
+                </ul>
+              </div>
+              <br>
+          </div>
+      </div>
+      <br>
+        <footer>
+          <h6 align="center">{{ nama }} | {{ npm }} | {{ kelas }}</h6>
+        </footer>
+    </div>
+    
+</body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            rows:[],
+            judul: "To Do List",
+            nama: "Jodi Penarosa",
+            npm: "180709698",
+            kelas: "C",
+            informasi:'',
+            aktivitas:'',
+            prioritas:''
+        },
+        methods: {
+            addData(){
+               if(this.informasi == '' || this.aktivitas == ''||this.prioritas == '')
+               {
+                   alert("Data Kosong");
+               }else{
+                   this.rows.push({
+                   nama: this.aktivitas,
+                   prioritas : this.prioritas,
+                   informasi : this.informasi
+                    })
+                    this.aktivitas ='';
+                    this.informasi='';
+                    this.prioritas='';
+               }
+           },
+           cancelData(){
+                this.aktivitas ='';
+                this.informasi='';
+                this.prioritas='';
+            },
+            deleteData(index){
+                this. rows.splice(index, 1)
+            }
+        },
+    })
+</script>
+</html>
